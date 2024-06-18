@@ -363,8 +363,8 @@ like(http_get('/shortbuf/match1?a=' . 'abpatternyzA' x 3),
 	qr/(\+A){3}/, 'shortbuf match 1.1');
 like(http_get('/shortbuf/match1?a=' . 'abpatternyzABCD' x 3),
 	qr/(\+ABCD){3}/, 'shortbuf match 1.2');
-like(http_get('/shortbuf/match1?a=' . 'abpatternyzABCDE' x 3),
-	qr/(\+ABCDE){3}/, 'shortbuf match 1.3');
+like(http_get('/shortbuf/match1?a=' . 'abpatternyzABCDE' x 3, sleep => 1),
+       	qr/(\+ABCDE){3}/, 'shortbuf match 1.3');
 like(http_get('/shortbuf/match2?a=' . 'abpatternyzAabpaernyzB' x 2),
 	qr/(\+A-B){2}/, 'shortbuf match 2.1 (multiple replace)');
 like(http_get('/shortbuf/match2?a=' . 'abpatternyzAabpaernyz' x 2),
@@ -373,7 +373,7 @@ like(http_get('/shortbuf/match3?a=' . 'abpatternyzA_' x 3),
 	qr/(\+A\*){3}/, 'shortbuf match 3 (1 byte search pattern)');
 like(http_get('/shortbuf/match4?a=' . 'pattABCDEFGHI' x 3),
 	qr/(\+ABCDEFGHI){3}/, 'shortbuf match 4');
-like(http_get('/shortbuf/match5?a=abpatternyzABCDE' . 'abpatternyABCDE' x 2),
+like(http_get('/shortbuf/match5?a=abpatternyzABCDE' . 'abpatternyABCDE' x 2, sleep => 1),
 	qr/\+ABCDE(-\*nyABCDE){2}/, 'shortbuf match 5');
 }
 
