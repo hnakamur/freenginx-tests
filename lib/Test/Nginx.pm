@@ -49,8 +49,10 @@ sub new {
 		or die "Can't create temp directory: $!\n";
 	$self->{_testdir} =~ s!\\!/!g if $^O eq 'MSWin32';
 
+	$NGINX =~ s!/!\\!g if $^O eq 'MSWin32';
+
 	Test::More::BAIL_OUT("no $NGINX binary found")
-		unless -x $NGINX;
+		unless -x $NGINX or ($^O eq 'MSWin32' and -x "$NGINX.exe");
 
 	return $self;
 }
