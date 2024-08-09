@@ -301,7 +301,7 @@ local $TODO = 'broken TLSv1.3 sigalgs in LibreSSL'
 	&& !Net::SSLeay::constant("LIBRESSL_VERSION_NUMBER")
 	&& test_tls13();
 
-like(`grep -F '[crit]' ${\($t->testdir())}/error.log`, qr/^$/s, 'no crit');
+is($t->grep_file('error.log', '[crit]'), '', 'no crit');
 
 }
 

@@ -293,7 +293,7 @@ like(get1('/cold?vary=x,y&xtra=1', 'x:2'), qr/HIT/, 'cold second');
 
 $t->stop();
 
-like(`grep -F '[crit]' ${\($t->testdir())}/error.log`, qr/^$/s, 'no crit');
+is($t->grep_file('error.log', '[crit]'), '', 'no crit');
 
 ###############################################################################
 

@@ -69,7 +69,7 @@ like(http_get('/'), qr/SEE-THIS/, 'memcached split trailer');
 
 like(http_get('/ssi.html'), qr/SEE-THIS/, 'memcached ssi var');
 
-like(`grep -F '[error]' ${\($t->testdir())}/error.log`, qr/^$/s, 'no errors');
+is($t->grep_file('error.log', '[error]'), '', 'no errors');
 
 ###############################################################################
 

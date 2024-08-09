@@ -195,7 +195,7 @@ is(test_reuse(8449), 0, 'cache off not reused');
 
 $t->stop();
 
-like(`grep -F '[crit]' ${\($t->testdir())}/error.log`, qr/^$/s, 'no crit');
+is($t->grep_file('error.log', '[crit]'), '', 'no crit');
 
 ###############################################################################
 

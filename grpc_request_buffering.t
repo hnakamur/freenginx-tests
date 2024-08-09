@@ -105,7 +105,7 @@ $frames = $f->{http_end}();
 is(eval(join '+', map { $_->{length} } grep { $_->{type} eq "DATA" } @$frames),
 	465, 'preserve_output - last body bytes');
 
-like(`grep -F '[crit]' ${\($t->testdir())}/error.log`, qr/^$/s, 'no crits');
+is($t->grep_file('error.log', '[crit]'), '', 'no crit');
 
 ###############################################################################
 

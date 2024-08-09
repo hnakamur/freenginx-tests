@@ -275,7 +275,7 @@ $t->stop();
 like($t->read_file('ssl.log'), qr/^(TLS|SSL)v(\d|\.)+$/m,
 	'log ssl variable on lingering close');
 
-like(`grep -F '[crit]' ${\($t->testdir())}/error.log`, qr/^$/s, 'no crit');
+is($t->grep_file('error.log', '[crit]'), '', 'no crit');
 
 ###############################################################################
 

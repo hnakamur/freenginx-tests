@@ -208,7 +208,7 @@ like(http_get('/inmemory/closed2'), qr/200 OK/, 'inmemory closed 2');
 
 # check for errors, shouldn't be any
 
-like(`grep -F '[error]' ${\($t->testdir())}/error.log`, qr/^$/s, 'no errors');
+is($t->grep_file('error.log', '[error]'), '', 'no errors');
 
 ###############################################################################
 

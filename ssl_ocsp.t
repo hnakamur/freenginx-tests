@@ -409,7 +409,7 @@ like(get('root', port => 8447), qr/200 OK.*SUCCESS/s, 'ocsp one');
 
 # check for errors
 
-like(`grep -F '[crit]' ${\($t->testdir())}/error.log`, qr/^$/s, 'no crit');
+is($t->grep_file('error.log', '[crit]'), '', 'no crit');
 
 ###############################################################################
 

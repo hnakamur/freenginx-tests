@@ -84,14 +84,12 @@ sub DESTROY {
 	}
 
 	if (Test::More->builder->expected_tests) {
-		my $errors = $self->read_file('error.log');
-		$errors = join "\n", $errors =~ /.+Sanitizer.+/gm;
+		my $errors = $self->grep_file('error.log', 'Sanitizer');
 		Test::More::is($errors, '', 'no sanitizer errors');
 	}
 
 	if (Test::More->builder->expected_tests && $ENV{TEST_NGINX_VALGRIND}) {
-		my $errors = $self->read_file('valgrind.log');
-		$errors = join "\n", $errors =~ /^==\d+== .+/gm;
+		my $errors = $self->grep_file('valgrind.log', /^==\d+== .+/m);
 		Test::More::is($errors, '', 'no valgrind errors');
 	}
 
@@ -631,6 +629,16 @@ sub read_file($) {
 	close F;
 
 	return $content;
+}
+
+sub grep_file($$) {
+	my ($self, $name, $regex) = @_;
+
+	my $lines = $self->read_file($name);
+
+	$regex = qr/.*\Q$regex\E.*/m if ref($regex) eq '';
+
+	return join "\n", $lines =~ /$regex/g;
 }
 
 sub write_file($$) {
